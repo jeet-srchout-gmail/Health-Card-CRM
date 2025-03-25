@@ -5,10 +5,7 @@
   --heading-font: "Raleway",  sans-serif;
   --nav-font: "Poppins",  sans-serif;
 }
-/* Green 1 - #75AB42
-Dark Green- #38481F
-olive green - #6B8D42
-Yellow- #EAE728 */
+
 /* Global Colors - The following color variables are used throughout the website. Updating them here will change the color scheme of the entire website */
 :root { 
   --background-color: #ffffff; /* Background color for the entire website, including individual sections */
