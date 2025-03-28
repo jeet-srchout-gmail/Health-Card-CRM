@@ -9,7 +9,7 @@
   <meta name="keywords" content="">
 
   <!-- Favicons -->
-  <link href="assets/img/favicon.png" rel="icon">
+  <link href="assets/img/onlylogo.svg" rel="icon">
   <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
 
   <!-- Fonts -->
@@ -34,12 +34,12 @@
 
 <body class="index-page">
 
-  <header id="header" class="header d-flex align-items-center fixed-top">
+  <header id="header" class="header d-flex align-items-center fixed-top" style="padding: 0;">
     <div class="container-fluid container-xl position-relative d-flex align-items-center justify-content-between">
 
       <a href="index.html" class="logo d-flex align-items-center">
         <!-- Uncomment the line below if you also wish to use an image logo -->
-        <img src="assets/img/onlylogo.svg" alt="" style="max-height: 60px!important">
+        <img src="assets/img/logo2.svg" alt="" style="max-height: 100px!important">
         <!-- <h1 class="sitename">Arogya Samriddhi</h1> -->
       </a>
 
@@ -48,6 +48,7 @@
           <li><a href="#hero" class="active">Home</a></li>
           <li><a href="#about">About Us</a></li>
           <li><a href="#team">Our Team</a></li>
+          <li><a href="#career">Careers</a></li>
           <li><a href="#pricing">Memberships</a></li>
 
           <li><a href="#contact">Contact Us</a></li>
@@ -894,12 +895,12 @@
 
     </section><!-- /Team Section -->
 
-    <section class="pricing section">
+    <section class="pricing section" id="career">
 
       <!-- Section Title -->
       <div class="container section-title" data-aos="fade-up">
-        <h2>Carrers</h2>
-        <div><span>Check Our</span> <span class="description-title">Carrer and Opportunity</span></div>
+        <h2>Careers</h2>
+        <div><span>Check Our</span> <span class="description-title">Career and Opportunity</span></div>
       </div><!-- End Section Title -->
 
       <div class="container">
@@ -1329,9 +1330,11 @@
           </div>
 
           <div class="col-lg-8">
-            <form action="forms/contact.php" method="post" class="php-email-form" data-aos="fade-up"
+            <form  method="post" class="php-email-form" data-aos="fade-up" id="contactForm"
               data-aos-delay="200">
               <div class="row gy-4">
+                <!-- <input type="hidden" name="access_key" value="6ed49a2c-51c7-4b69-8ffd-39e354e9cb0e"> -->
+                <input type="hidden" name="access_key" value="6e6a9a4f-011e-4bdd-a786-67d988bcbbf0">
 
                 <div class="col-md-6">
                   <input type="text" name="name" class="form-control" placeholder="Your Name" required="">
@@ -1342,7 +1345,7 @@
                 </div>
 
                 <div class="col-md-12">
-                  <input type="text" class="form-control" name="subject" placeholder="Subject" required="">
+                  <input type="text" class="form-control" name="topic" placeholder="Subject" required="">
                 </div>
 
                 <div class="col-md-12">
@@ -1375,7 +1378,7 @@
       <div class="row gy-4">
         <div class="col-lg-4 col-md-6 footer-about">
           <a href="index.html" class="logo d-flex align-items-center">
-            <img src="assets/img/logo.svg" alt="" style="max-height: 150px!important">
+            <img src="assets/img/logo2.svg" alt="" style="max-height: 150px!important">
           </a>
           <div class="footer-contact ">
             <p>301, Tower 1, Assotech Business Cresterra, </p>
@@ -1447,6 +1450,7 @@
 
   <!-- Main JS File -->
   <script src="assets/js/main.js"></script>
+  <script src="assets/js/form.js"></script>
 
 </body>
 
