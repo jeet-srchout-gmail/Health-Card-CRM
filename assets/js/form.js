@@ -43,6 +43,10 @@ document.getElementById('contactForm').addEventListener('submit', function (e) {
 
             setTimeout(() => {
                 document.querySelector('.error-message').style.display = 'none';
-            }, 5000); // Hide after 5 seconds
+            }, 5000);
         });
 });
+
+
+
+
