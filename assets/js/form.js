@@ -1,13 +1,37 @@
 document.getElementById('contactForm').addEventListener('submit', function (e) {
     e.preventDefault(); // Prevent default form submission
 
-    // Show the loading indicator
-    document.querySelector('.loading').style.display = 'block';
-    document.querySelector('.error-message').style.display = 'none'; // Hide error message initially
-    document.querySelector('.sent-message').style.display = 'none'; // Hide success message initially
-
     // Collect form data
     const formData = new FormData(this);
+    const email = formData.get('email');
+    const phone = formData.get('phone');
+
+    // Validation regex
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const phoneRegex = /^[0-9]{10}$/; // Adjust if needed for country codes
+
+    // Error container
+    const errorBox = document.querySelector('.error-message');
+    const loadingBox = document.querySelector('.loading');
+    const successBox = document.querySelector('.sent-message');
+
+    errorBox.style.display = 'none';
+    successBox.style.display = 'none';
+
+    if (!emailRegex.test(email)) {
+        errorBox.innerText = 'Please enter a valid email address.';
+        errorBox.style.display = 'block';
+        return;
+    }
+
+    if (!phoneRegex.test(phone)) {
+        errorBox.innerText = 'Please enter a valid 10-digit phone number.';
+        errorBox.style.display = 'block';
+        return;
+    }
+
+    // Show the loading indicator
+    loadingBox.style.display = 'block';
 
     fetch('https://api.web3forms.com/submit', {
         method: 'POST',
@@ -15,34 +39,32 @@ document.getElementById('contactForm').addEventListener('submit', function (e) {
     })
         .then(response => response.json())
         .then(data => {
-            console.log(data);
-
-            document.querySelector('.loading').style.display = 'none'; // Hide loading indicator
+            loadingBox.style.display = 'none';
 
             if (data.success) {
-                document.querySelector('.sent-message').innerText = 'Your message has been sent successfully!';
-                document.querySelector('.sent-message').style.display = 'block'; // Show success message
+                successBox.innerText = 'Your message has been sent successfully!';
+                successBox.style.display = 'block';
                 document.getElementById('contactForm').reset();
 
                 setTimeout(() => {
-                    document.querySelector('.sent-message').style.display = 'none';
-                }, 5000); // Hide after 5 seconds
+                    successBox.style.display = 'none';
+                }, 5000);
             } else {
-                document.querySelector('.error-message').innerText = 'Error: ' + (data.message || 'Something went wrong');
-                document.querySelector('.error-message').style.display = 'block'; // Show error message
+                errorBox.innerText = 'Error: ' + (data.message || 'Something went wrong');
+                errorBox.style.display = 'block';
 
                 setTimeout(() => {
-                    document.querySelector('.error-message').style.display = 'none';
-                }, 5000); // Hide after 5 seconds
+                    errorBox.style.display = 'none';
+                }, 5000);
             }
         })
         .catch(error => {
-            document.querySelector('.loading').style.display = 'none'; // Hide loading indicator
-            document.querySelector('.error-message').innerText = 'Error: ' + error.message;
-            document.querySelector('.error-message').style.display = 'block'; // Show error message
+            loadingBox.style.display = 'none';
+            errorBox.innerText = 'Error: ' + error.message;
+            errorBox.style.display = 'block';
 
             setTimeout(() => {
-                document.querySelector('.error-message').style.display = 'none';
+                errorBox.style.display = 'none';
             }, 5000);
         });
 });
@@ -56,9 +78,9 @@ document.addEventListener('DOMContentLoaded', function () {
         let button = event.relatedTarget;
         let planName = button.getAttribute('data-plan');
 
-        let input = planModal.querySelector('input[name="plan"]');
+        let input = document.getElementById('planTitleInput');
         input.value = planName || '';
-
+        console.log(planName)
         // Update modal title too (optional)
         let modalTitle = planModal.querySelector('#planBookingModalLabel');
         modalTitle.textContent = planName ? `Book Your ${planName}` : 'Book Your Plan';
@@ -67,55 +89,92 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
 document.getElementById('planBookingForm').addEventListener('submit', function (e) {
-    e.preventDefault(); // Prevent form's natural submit
+    e.preventDefault();
 
     // Show loading, hide previous messages
-    document.querySelector('#planBookingForm .loading').style.display = 'block';
-    document.querySelector('#planBookingForm .error-message').style.display = 'none';
-    document.querySelector('#planBookingForm .sent-message').style.display = 'none';
+    const loadingBox = document.querySelector('#planBookingForm .loading');
+    const errorBox = document.querySelector('#planBookingForm .error-message');
+    const successBox = document.querySelector('#planBookingForm .sent-message');
+
+    loadingBox.style.display = 'block';
+    errorBox.style.display = 'none';
+    successBox.style.display = 'none';
 
     const formData = new FormData(this);
+    console.log(formData)
+    const phone = formData.get('primary_mobile_number');
+    const aadhaar = formData.get('primary_aadhar_number');
+    const plan = formData.get('plan');
 
-    fetch('https://api.web3forms.com/submit', { // Replace with your actual endpoint
+    const phoneRegex = /^[0-9]{10}$/;
+    const aadhaarRegex = /^\d{12}$/;
+
+    if (!phoneRegex.test(phone)) {
+        errorBox.innerText = 'Please enter a valid 10-digit phone number.';
+        errorBox.style.display = 'block';
+        loadingBox.style.display = 'none';
+        return;
+    }
+
+    if (!aadhaarRegex.test(aadhaar)) {
+        errorBox.innerText = 'Please enter a valid 12-digit Aadhaar number.';
+        errorBox.style.display = 'block';
+        loadingBox.style.display = 'none';
+        return;
+    }
+
+    // Validate number of members based on plan
+    const memberCount = document.querySelectorAll('#memberContainer .member-group').length;
+    if (plan === 'Small Family Plan' && memberCount > 5) {
+        errorBox.innerText = 'The Small plan allows up to 4 family members only.';
+        errorBox.style.display = 'block';
+        loadingBox.style.display = 'none';
+        return;
+    }
+
+    if (plan === 'Large Family Plan' && memberCount > 9) {
+        errorBox.innerText = 'The Large plan allows up to 8 family members only.';
+        errorBox.style.display = 'block';
+        loadingBox.style.display = 'none';
+        return;
+    }
+
+    // Proceed with submission
+    fetch('https://api.web3forms.com/submit', {
         method: 'POST',
         body: formData
     })
         .then(response => response.json())
         .then(data => {
-            document.querySelector('#planBookingForm .loading').style.display = 'none';
+            loadingBox.style.display = 'none';
 
             if (data.success) {
-                document.querySelector('#planBookingForm .sent-message').innerText =
-                    'Thank you for submitting details for Arogya Samriddhi health card. Our customer service team will contact you shortly for payment process and explaining further details!';
-                document.querySelector('#planBookingForm .sent-message').style.display = 'block';
+                successBox.innerText = 'Thank you for submitting details for Arogya Samriddhi health card. Our customer service team will contact you shortly!';
+                successBox.style.display = 'block';
+
                 document.getElementById('planBookingForm').reset();
+                document.getElementById('memberContainer').innerHTML = ''; // Clear dynamic members
 
                 setTimeout(() => {
-                    document.querySelector('#planBookingForm .sent-message').style.display = 'none';
+                    successBox.style.display = 'none';
                     var modal = bootstrap.Modal.getInstance(document.getElementById('planBookingModal'));
-                    modal.hide(); // Auto-close modal after success
+                    modal.hide();
                 }, 5000);
             } else {
-                document.querySelector('#planBookingForm .error-message').innerText =
-                    'Error: ' + (data.message || 'Something went wrong.');
-                document.querySelector('#planBookingForm .error-message').style.display = 'block';
+                errorBox.innerText = 'Error: ' + (data.message || 'Something went wrong.');
+                errorBox.style.display = 'block';
 
-                setTimeout(() => {
-                    document.querySelector('#planBookingForm .error-message').style.display = 'none';
-                }, 5000);
+                setTimeout(() => errorBox.style.display = 'none', 5000);
             }
         })
         .catch(error => {
-            document.querySelector('#planBookingForm .loading').style.display = 'none';
-            document.querySelector('#planBookingForm .error-message').innerText =
-                'Error: ' + error.message;
-            document.querySelector('#planBookingForm .error-message').style.display = 'block';
-
-            setTimeout(() => {
-                document.querySelector('#planBookingForm .error-message').style.display = 'none';
-            }, 5000);
+            loadingBox.style.display = 'none';
+            errorBox.innerText = 'Error: ' + error.message;
+            errorBox.style.display = 'block';
+            setTimeout(() => errorBox.style.display = 'none', 5000);
         });
 });
+
 
 // JOB FORM
 document.addEventListener('DOMContentLoaded', function () {
@@ -127,6 +186,7 @@ document.addEventListener('DOMContentLoaded', function () {
         const button = event.relatedTarget;
         const job = button.getAttribute('data-job');
         jobTitleInput.value = job;
+        console.log(jobTitleInput,job)
         jobModalLabel.textContent = 'Apply for ' + job;
     });
 });
@@ -145,39 +205,39 @@ document.getElementById('jobBookingForm').addEventListener('submit', function (e
         method: 'POST',
         body: formData
     })
-    .then(response => response.json())
-    .then(data => {
-        document.querySelector('#jobBookingForm .loading').style.display = 'none';
+        .then(response => response.json())
+        .then(data => {
+            document.querySelector('#jobBookingForm .loading').style.display = 'none';
 
-        if (data.success) {
-            document.querySelector('#jobBookingForm .sent-message').innerText =
-                'Your application has been submitted successfully! Our team will contact you shortly.';
-            document.querySelector('#jobBookingForm .sent-message').style.display = 'block';
-            document.getElementById('jobBookingForm').reset();
+            if (data.success) {
+                document.querySelector('#jobBookingForm .sent-message').innerText =
+                    'Your application has been submitted successfully! Our team will contact you shortly.';
+                document.querySelector('#jobBookingForm .sent-message').style.display = 'block';
+                document.getElementById('jobBookingForm').reset();
 
-            setTimeout(() => {
-                document.querySelector('#jobBookingForm .sent-message').style.display = 'none';
-                const modal = bootstrap.Modal.getInstance(document.getElementById('jobBookingModal'));
-                modal.hide();  // Auto-close modal after success
-            }, 5000);
-        } else {
+                setTimeout(() => {
+                    document.querySelector('#jobBookingForm .sent-message').style.display = 'none';
+                    const modal = bootstrap.Modal.getInstance(document.getElementById('jobBookingModal'));
+                    modal.hide();  // Auto-close modal after success
+                }, 5000);
+            } else {
+                document.querySelector('#jobBookingForm .error-message').innerText =
+                    'Error: ' + (data.message || 'Something went wrong.');
+                document.querySelector('#jobBookingForm .error-message').style.display = 'block';
+
+                setTimeout(() => {
+                    document.querySelector('#jobBookingForm .error-message').style.display = 'none';
+                }, 5000);
+            }
+        })
+        .catch(error => {
+            document.querySelector('#jobBookingForm .loading').style.display = 'none';
             document.querySelector('#jobBookingForm .error-message').innerText =
-                'Error: ' + (data.message || 'Something went wrong.');
+                'Error: ' + error.message;
             document.querySelector('#jobBookingForm .error-message').style.display = 'block';
 
             setTimeout(() => {
                 document.querySelector('#jobBookingForm .error-message').style.display = 'none';
             }, 5000);
-        }
-    })
-    .catch(error => {
-        document.querySelector('#jobBookingForm .loading').style.display = 'none';
-        document.querySelector('#jobBookingForm .error-message').innerText =
-            'Error: ' + error.message;
-        document.querySelector('#jobBookingForm .error-message').style.display = 'block';
-
-        setTimeout(() => {
-            document.querySelector('#jobBookingForm .error-message').style.display = 'none';
-        }, 5000);
-    });
+        });
 });
