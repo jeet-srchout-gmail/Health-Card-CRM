@@ -66,6 +66,7 @@
           <li><a href="#team">Our Team</a></li>
           <li><a href="#career">Careers</a></li>
 
+          <li><a href="#blog">Our Blogs</a></li>
           <li><a href="#contact">Contact Us</a></li>
           <a href="#pricing" class="read-more" style="background: #75ab42;
           padding: 10px 20px;
@@ -546,10 +547,7 @@
               </div>
             </div>
           </div>
-          <div class="text-center mt-3">
-            <button id="btn-firozabad" class="btn btn-primary show-more-btn" style="display: none;"
-              onclick="toggleShowMore('firozabad')">Show More</button>
-          </div>
+
 
         </div>
 
@@ -573,7 +571,10 @@
           </div>
           <!-- Add more Agra hospitals here -->
         </div>
-
+        <div class="text-center mt-3">
+          <button id="btn-firozabad" class="btn location-tab active show-more-btn" style="display: none;"
+            onclick="toggleShowMore('firozabad')">Show More</button>
+        </div>
       </div>
 
     </section>
@@ -1197,6 +1198,10 @@
       </div>
 
     </section>
+
+    
+ 
+
     <!-- Pricing Section -->
     <section id="pricing" class="pricing section">
 
@@ -1507,6 +1512,72 @@
       </div>
 
     </section>
+       <section class="pricing section" id="blog">
+
+      <!-- Section Title -->
+      <div class="container section-title" data-aos="fade-up">
+        <h2>Blog</h2>
+        <div><span>Check Our</span> <span class="description-title">Latest Blogs</span></div>
+      </div><!-- End Section Title -->
+
+      <div class="container">
+        <div class="row gy-4">
+
+          <!-- Sales Consultant -->
+          <div class="col-lg-3 col-md-6" data-aos="zoom-in" data-aos-delay="100">
+            <div class="pricing-item">
+              <img src="assets/img/apple-touch-icon.png" class="card-img-top" style="max-height: 300px;" alt="">
+              <h3 class="mt-3">How one healthcard complements the other?</h3>
+              <p class="description">
+               Your Private Health Insurance Isn’t As Fool-Proof As You Think — Why an Add-On Membership of Arogya Samriddhi Health Card Can Still Save You Thousands?...
+              </p>
+              <a href="https://arogyasamriddhi.blogspot.com/2025/05/your-private-health-insurance-isnt-as.html" target="_blank" class="cta-btn">Read More</a>
+            </div>
+          </div>
+          <div class="col-lg-3 col-md-6" data-aos="zoom-in" data-aos-delay="100">
+            <div class="pricing-item">
+              <img src="assets/img/apple-touch-icon.png" class="card-img-top" style="max-height: 300px;" alt="">
+              <h3 class="mt-3">Sales Consultant</h3>
+              <p class="description">
+                Assist members in selecting products/services that fit their needs, provide sales consultations, and
+                drive revenue growth...
+              </p>
+              <a href="https://arogyasamriddhi.blogspot.com/2025/05/arogyasamriddhi.blogspot.com.html" class="cta-btn">Read More</a>
+            </div>
+          </div>
+          <div class="col-lg-3 col-md-6" data-aos="zoom-in" data-aos-delay="100">
+            <div class="pricing-item">
+              <img src="assets/img/apple-touch-icon.png" class="card-img-top" style="max-height: 300px;" alt="">
+              <h3 class="mt-3">Sales Consultant</h3>
+              <p class="description">
+                Assist members in selecting products/services that fit their needs, provide sales consultations, and
+                drive revenue growth...
+              </p>
+              <a href="https://arogyasamriddhi.blogspot.com/2025/05/discounted-premium-healthcare-how-does.html" class="cta-btn">Read More</a>
+            </div>
+          </div>
+          <div class="col-lg-3 col-md-6" data-aos="zoom-in" data-aos-delay="100">
+            <div class="pricing-item">
+              <img src="assets/img/apple-touch-icon.png" class="card-img-top" style="max-height: 300px;" alt="">
+              <h3 class="mt-3">Sales Consultant</h3>
+              <p class="description">
+                Assist members in selecting products/services that fit their needs, provide sales consultations, and
+                drive revenue growth...
+              </p>
+              <a href="javascript:void(0);" class="cta-btn">Read More</a>
+            </div>
+          </div>
+
+       
+
+
+
+        </div>
+
+      </div>
+
+    </section>
+
     <!-- Contact Section -->
     <section id="contact" class="contact section">
 
@@ -1794,10 +1865,12 @@
           <h4>Useful Links</h4>
           <ul>
             <li><a href="#">Home</a></li>
-            <li><a href="#">About us</a></li>
-            <li><a href="#">Services</a></li>
-            <li><a href="#">Terms of service</a></li>
-            <li><a href="#">Privacy policy</a></li>
+            <li><a href="#about">About us</a></li>
+            <li><a href="Policies/cookie-policy.html">Cookies Policy</a></li>
+            <li><a href="Policies/disclaimer-poilcy.html">Disclaimer Policy</a></li>
+            <li><a href="Policies/payment-and-refund.html">Payment and Refund</a></li>
+            <li><a href="Policies/term-of-use.html">Term of Use</a></li>
+            <li><a href="Policies/privacy-policy.html">Privacy Policy</a></li>
           </ul>
         </div>
 
@@ -1918,27 +1991,31 @@
       }
     }
   </script>
-  <script>
+  <script>  
     function showHospitals(city, btn) {
       // Hide all hospital lists
       document.querySelectorAll('.hospital-list').forEach(el => el.style.display = 'none');
 
-      // Show selected list
+      // Hide all Show More buttons
+      document.querySelectorAll('.show-more-btn').forEach(el => el.style.display = 'none');
+
+      // Show selected hospital list
       const selectedList = document.getElementById(city);
       selectedList.style.display = 'flex';
 
-      // Set active tab
+      // Highlight active tab
       document.querySelectorAll('.location-tab').forEach(b => b.classList.remove('active'));
       if (btn) btn.classList.add('active');
 
-      // Cards and show-more logic
       const cards = selectedList.querySelectorAll('.col-lg-3');
       const showMoreBtn = document.getElementById(`btn-${city}`);
 
       if (window.innerWidth <= 576) {
+        // Hide all cards initially
         cards.forEach((card, index) => {
           card.style.display = index < 4 ? 'block' : 'none';
         });
+
         if (cards.length > 4) {
           showMoreBtn.style.display = 'block';
           showMoreBtn.innerText = 'Show More';
@@ -1947,6 +2024,7 @@
           showMoreBtn.style.display = 'none';
         }
       } else {
+        // Show all cards on desktop
         cards.forEach(card => card.style.display = 'block');
         showMoreBtn.style.display = 'none';
       }
@@ -1959,29 +2037,27 @@
       const expanded = button.getAttribute('data-expanded') === 'true';
 
       if (expanded) {
-        // Collapse back to 4
         cards.forEach((card, index) => {
           card.style.display = index < 4 ? 'block' : 'none';
         });
         button.innerText = 'Show More';
         button.setAttribute('data-expanded', 'false');
       } else {
-        // Show all
         cards.forEach(card => card.style.display = 'block');
         button.innerText = 'Show Less';
         button.setAttribute('data-expanded', 'true');
       }
     }
 
-    // On DOM load, activate first tab
+    // Activate first tab on page load
     document.addEventListener('DOMContentLoaded', () => {
       const firstTab = document.querySelector('.location-tab');
       if (firstTab) {
         showHospitals(firstTab.getAttribute('data-city'), firstTab);
-        firstTab.classList.add('active');
       }
     });
   </script>
+
 
 
 

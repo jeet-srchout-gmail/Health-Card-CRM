@@ -469,7 +469,7 @@ h6 {
 
 .footer .footer-about p {
   font-size: 14px;
-  font-family: var(--heading-font);
+  /* font-family: var(--heading-font); */
 }
 
 .footer .social-links a {
