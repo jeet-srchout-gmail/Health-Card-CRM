@@ -48,8 +48,63 @@
 </head>
 
 <body class="index-page">
+  <style>
+   .goog-te-banner-frame.skiptranslate {
+    display: none !important;
+  }
 
-  <header id="header" class="header d-flex align-items-center fixed-top" style="padding: 0;">
+  /* Make Google Translate div sticky at top */
+  #google_translate_element {
+    position: sticky;
+    top: 0;
+    background-color: #38481f;
+    padding: 8px 15px;
+    z-index: 1200;
+    text-align: right;
+  }
+
+  /* Style the dropdown */
+  #google_translate_element select.goog-te-combo {
+    background-color: #38481f !important;
+    color: white !important;
+    border: none !important;
+    padding: 5px 10px !important;
+    font-weight: bold;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+
+  #google_translate_element select.goog-te-combo:hover {
+    background-color: #38481f !important;
+  }
+
+  </style>
+
+  <div id="google_translate_element"></div>
+
+  <script type="text/javascript">
+    function googleTranslateElementInit() {
+      new google.translate.TranslateElement({
+        pageLanguage: 'en',
+        includedLanguages: 'hi,en',
+        layout: google.translate.TranslateElement.InlineLayout.SIMPLE
+      }, 'google_translate_element');
+    }
+
+    // Clear google translate URL parameters to prevent reload jump
+    window.onload = function () {
+      setTimeout(function () {
+        if (window.location.search.indexOf('hl=') > -1 || window.location.hash.indexOf('googtrans') > -1) {
+          window.history.replaceState({}, document.title, window.location.pathname);
+        }
+      }, 1000);
+    }
+  </script>
+
+  <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit">
+  </script>
+
+  <header id="header" class="header d-flex align-items-center fixed-top mt-4" style="padding: 0;">
     <div class="container-fluid container-xl position-relative d-flex align-items-center justify-content-between">
 
       <a href="index.html" class="logo d-flex align-items-center">
@@ -1621,8 +1676,8 @@
           <div class="col-lg-8">
             <form method="post" class="php-email-form" data-aos="fade-up" id="contactForm" data-aos-delay="200">
               <div class="row gy-4">
-                <!-- <input type="hidden" title="uttsav" name="access_key" value="6ed49a2c-51c7-4b69-8ffd-39e354e9cb0e"> -->
-                <input type="hidden" title="live" name="access_key" value="6e6a9a4f-011e-4bdd-a786-67d988bcbbf0">
+                <input type="hidden" title="uttsav" name="access_key" value="6ed49a2c-51c7-4b69-8ffd-39e354e9cb0e">
+                <!-- <input type="hidden" title="live" name="access_key" value="6e6a9a4f-011e-4bdd-a786-67d988bcbbf0"> -->
 
                 <div class="col-md-6">
                   <input type="text" name="name" class="form-control" placeholder="Your Name" required="">
@@ -1800,8 +1855,8 @@
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <form method="post" class="php-email-form" id="jobBookingForm" enctype="multipart/form-data">
-          <!-- <input type="hidden" title="uttsav" name="access_key" value="6ed49a2c-51c7-4b69-8ffd-39e354e9cb0e"> -->
-          <input type="hidden" title="live" name="access_key" value="960bdc0e-a4de-4b73-a867-dc669a246805">
+          <input type="hidden" title="uttsav" name="access_key" value="6ed49a2c-51c7-4b69-8ffd-39e354e9cb0e">
+          <!-- <input type="hidden" title="live" name="access_key" value="960bdc0e-a4de-4b73-a867-dc669a246805"> -->
 
           <div class="modal-body">
             <div class="row gy-3">
@@ -1844,8 +1899,8 @@
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <form method="post" class="php-email-form" id="planBookingForm">
-          <input type="hidden" name="access_key" value="6e6a9a4f-011e-4bdd-a786-67d988bcbbf0">
-          <!-- <input type="hidden" title="uttsav" name="access_key" value="6ed49a2c-51c7-4b69-8ffd-39e354e9cb0e"> -->
+          <!-- <input type="hidden" name="access_key" value="6e6a9a4f-011e-4bdd-a786-67d988bcbbf0"> -->
+          <input type="hidden" title="uttsav" name="access_key" value="6ed49a2c-51c7-4b69-8ffd-39e354e9cb0e">
 
           <input type="hidden" id="planTitleInput" name="plan" value="Small"> <!-- Or dynamically set "Large" -->
 
