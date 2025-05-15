@@ -91,7 +91,6 @@ document.addEventListener('DOMContentLoaded', function () {
 document.getElementById('planBookingForm').addEventListener('submit', function (e) {
     e.preventDefault();
 
-    // Show loading, hide previous messages
     const loadingBox = document.querySelector('#planBookingForm .loading');
     const errorBox = document.querySelector('#planBookingForm .error-message');
     const successBox = document.querySelector('#planBookingForm .sent-message');
@@ -101,7 +100,6 @@ document.getElementById('planBookingForm').addEventListener('submit', function (
     successBox.style.display = 'none';
 
     const formData = new FormData(this);
-    console.log(formData)
     const phone = formData.get('primary_mobile_number');
     const aadhaar = formData.get('primary_aadhar_number');
     const plan = formData.get('plan');
@@ -109,37 +107,60 @@ document.getElementById('planBookingForm').addEventListener('submit', function (
     const phoneRegex = /^[0-9]{10}$/;
     const aadhaarRegex = /^\d{12}$/;
 
+    // Primary person validation
     if (!phoneRegex.test(phone)) {
-        errorBox.innerText = 'Please enter a valid 10-digit phone number.';
+        errorBox.innerText = 'Please enter a valid 10-digit primary phone number.';
         errorBox.style.display = 'block';
         loadingBox.style.display = 'none';
         return;
     }
 
     if (!aadhaarRegex.test(aadhaar)) {
-        errorBox.innerText = 'Please enter a valid 12-digit Aadhaar number.';
+        errorBox.innerText = 'Please enter a valid 12-digit primary Aadhaar number.';
         errorBox.style.display = 'block';
         loadingBox.style.display = 'none';
         return;
     }
 
-    // Validate number of members based on plan
-    const memberCount = document.querySelectorAll('#memberContainer .member-group').length;
-    if (plan === 'Small Family Plan' && memberCount > 5) {
+    // Plan member count validation
+    const members = document.querySelectorAll('#memberContainer .member-group');
+    const memberTotal = members.length;
+
+    if (plan === 'Small Family Plan' && memberTotal > 4) {
         errorBox.innerText = 'The Small plan allows up to 4 family members only.';
         errorBox.style.display = 'block';
         loadingBox.style.display = 'none';
         return;
     }
 
-    if (plan === 'Large Family Plan' && memberCount > 9) {
+    if (plan === 'Large Family Plan' && memberTotal > 8) {
         errorBox.innerText = 'The Large plan allows up to 8 family members only.';
         errorBox.style.display = 'block';
         loadingBox.style.display = 'none';
         return;
     }
 
-    // Proceed with submission
+    // Member validation loop
+    for (let i = 1; i <= memberTotal; i++) {
+        const mobile = formData.get(`member${i}_mobile`);
+        const aadhar = formData.get(`member${i}_aadhar`);
+
+        if (mobile && !phoneRegex.test(mobile)) {
+            errorBox.innerText = `Member ${i}: Invalid mobile number. Must be 10 digits.`;
+            errorBox.style.display = 'block';
+            loadingBox.style.display = 'none';
+            return;
+        }
+
+        if (aadhar && !aadhaarRegex.test(aadhar)) {
+            errorBox.innerText = `Member ${i}: Invalid Aadhaar number. Must be 12 digits.`;
+            errorBox.style.display = 'block';
+            loadingBox.style.display = 'none';
+            return;
+        }
+    }
+
+    // Submit data
     fetch('https://api.web3forms.com/submit', {
         method: 'POST',
         body: formData
@@ -149,11 +170,12 @@ document.getElementById('planBookingForm').addEventListener('submit', function (
             loadingBox.style.display = 'none';
 
             if (data.success) {
-                successBox.innerText = 'Thank you for submitting details for Arogya Samriddhi health card. Our customer service team will contact you shortly!';
+                successBox.innerText = 'Thank you for submitting your and your family members details. Our team will contact you for payment and other assistance to get your card membership activated.';
                 successBox.style.display = 'block';
 
                 document.getElementById('planBookingForm').reset();
-                document.getElementById('memberContainer').innerHTML = ''; // Clear dynamic members
+                document.getElementById('memberContainer').innerHTML = '';
+                memberCount = 0;
 
                 setTimeout(() => {
                     successBox.style.display = 'none';
@@ -163,7 +185,6 @@ document.getElementById('planBookingForm').addEventListener('submit', function (
             } else {
                 errorBox.innerText = 'Error: ' + (data.message || 'Something went wrong.');
                 errorBox.style.display = 'block';
-
                 setTimeout(() => errorBox.style.display = 'none', 5000);
             }
         })
@@ -176,6 +197,8 @@ document.getElementById('planBookingForm').addEventListener('submit', function (
 });
 
 
+
+
 // JOB FORM
 document.addEventListener('DOMContentLoaded', function () {
     const jobModal = document.getElementById('jobBookingModal');
@@ -186,7 +209,7 @@ document.addEventListener('DOMContentLoaded', function () {
         const button = event.relatedTarget;
         const job = button.getAttribute('data-job');
         jobTitleInput.value = job;
-        console.log(jobTitleInput,job)
+        console.log(jobTitleInput, job)
         jobModalLabel.textContent = 'Apply for ' + job;
     });
 });
