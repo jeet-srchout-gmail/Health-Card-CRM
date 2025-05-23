@@ -80,7 +80,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
         let input = document.getElementById('planTitleInput');
         input.value = planName || '';
-        console.log(planName)
+        // console.log(planName)
         // Update modal title too (optional)
         let modalTitle = planModal.querySelector('#planBookingModalLabel');
         modalTitle.textContent = planName ? `Book Your ${planName}` : 'Book Your Plan';
@@ -126,15 +126,15 @@ document.getElementById('planBookingForm').addEventListener('submit', function (
     const members = document.querySelectorAll('#memberContainer .member-group');
     const memberTotal = members.length;
 
-    if (plan === 'Small Family Plan' && memberTotal > 4) {
-        errorBox.innerText = 'The Small plan allows up to 4 family members only.';
+    if (plan === 'Small Family Plan' && memberTotal > 3) {
+        errorBox.innerText = 'The Small plan allows up to 3 family members only.';
         errorBox.style.display = 'block';
         loadingBox.style.display = 'none';
         return;
     }
 
-    if (plan === 'Large Family Plan' && memberTotal > 8) {
-        errorBox.innerText = 'The Large plan allows up to 8 family members only.';
+    if (plan === 'Large Family Plan' && memberTotal > 7) {
+        errorBox.innerText = 'The Large plan allows up to 7 family members only.';
         errorBox.style.display = 'block';
         loadingBox.style.display = 'none';
         return;
@@ -209,7 +209,7 @@ document.addEventListener('DOMContentLoaded', function () {
         const button = event.relatedTarget;
         const job = button.getAttribute('data-job');
         jobTitleInput.value = job;
-        console.log(jobTitleInput, job)
+        // console.log(jobTitleInput, job)
         jobModalLabel.textContent = 'Apply for ' + job;
     });
 });

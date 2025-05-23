@@ -2155,10 +2155,10 @@
 
     function addMember() {
       const plan = document.getElementById('planTitleInput').value.trim();
-      const max = plan === 'Small Family Plan' ? 5 : 9;
+      const max = plan === 'Small Family Plan' ? 4 : 8;
 
       if (memberCount >= max - 1) {
-        alert(`You can add up to ${max - 1} family members for the ${plan} plan.`);
+        alert(`You can add up to ${max - 1} family members for the ${plan} .`);
         return;
       }
 
