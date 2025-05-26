@@ -95,6 +95,7 @@ document.getElementById('planBookingForm').addEventListener('submit', function (
     const errorBox = document.querySelector('#planBookingForm .error-message');
     const successBox = document.querySelector('#planBookingForm .sent-message');
 
+
     loadingBox.style.display = 'block';
     errorBox.style.display = 'none';
     successBox.style.display = 'none';
@@ -173,14 +174,14 @@ document.getElementById('planBookingForm').addEventListener('submit', function (
                 successBox.innerText = 'Thank you for submitting your and your family members details. Our team will contact you for payment and other assistance to get your card membership activated.';
                 successBox.style.display = 'block';
 
-                document.getElementById('planBookingForm').reset();
+                // document.getElementById('planBookingForm').reset();
                 document.getElementById('memberContainer').innerHTML = '';
                 memberCount = 0;
+                document.querySelector('#planmodalform').style.display = 'none';
+                document.querySelector('#planqrcode').style.display = 'flex';
 
                 setTimeout(() => {
                     successBox.style.display = 'none';
-                    var modal = bootstrap.Modal.getInstance(document.getElementById('planBookingModal'));
-                    modal.hide();
                 }, 5000);
             } else {
                 errorBox.innerText = 'Error: ' + (data.message || 'Something went wrong.');
@@ -196,6 +197,10 @@ document.getElementById('planBookingForm').addEventListener('submit', function (
         });
 });
 
+document.getElementById('backToPlanBtn').addEventListener('click', function () {
+     document.querySelector('#planmodalform').style.display = 'block';
+                document.querySelector('#planqrcode').style.display = 'none';
+});
 
 
 
