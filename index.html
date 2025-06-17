@@ -43,6 +43,10 @@
     .location-tab.active {
       background: #75ab42;
     }
+
+    .carousel-item iframe {
+      pointer-events: auto;
+    }
   </style>
 
 </head>
@@ -147,10 +151,10 @@
           </div>
 
           <div class="col-lg-6  d-flex flex-column justify-content-center" data-aos="fade-in">
-            <h1>Join India’s smart healthcare movement with <span>Arogya Samriddhi Health Card today !</span></h1>
+            <h1>Join India's smart healthcare movement with <span>Arogya Samriddhi Health Card today!</span></h1>
             <p>Worried about rising medical bills? Sudden hospitalizations causing burden on monthly budgets?
               <br>Now save up to 40% instantly on all doctor visits, tests, medicines, and hospital charges.
-              Protect your family’s Savings and help others earn too via referrals.
+              Protect your family's Savings and help others earn too via referrals.
             </p>
             <div class="d-flex">
               <a href="#pricing" class="btn-get-started" style="background: white;color: #38481F;font-weight: 700;">Get
@@ -258,6 +262,31 @@
     </section><!-- /About Section -->
 
 
+    <!-- Video Carousel -->
+    <div id="carouselExample" class="carousel slide">
+      <div class="carousel-inner">
+        <div class="carousel-item active">
+          <iframe width="100%" height="400" loading="lazy" src="https://www.youtube.com/embed/bA2-29YcmTM?autoplay=1&mute=1" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+        </div>
+        <div class="carousel-item">
+          <iframe width="100%" height="400" loading="lazy" src="https://youtube.com/embed/cSHEAURcR8A?mute=1"  allowfullscreen></iframe>
+        </div>
+        <div class="carousel-item">
+          <iframe width="100%" height="400" loading="lazy" src="https://youtube.com/embed/GbJXjtIXMmo?feature=share&mute=1"  allowfullscreen></iframe>
+        </div>
+        <div class="carousel-item">
+          <iframe width="100%" height="400" loading="lazy" src="https://youtube.com/embed/Tox4LLFFEuI?feature=share&mute=1" allowfullscreen></iframe>
+        </div>
+      </div>
+      <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      </button>
+      <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      </button>
+    </div>
+
+
     <!-- Stats Section -->
     <section id="stats" class="stats section light-background">
 
@@ -295,7 +324,7 @@
           <div class="col-lg-3 col-md-6 d-flex flex-column align-items-center">
             <i class="bi bi-globe-central-south-asia"></i>
             <div class="stats-item">
-              <span data-purecounter-start="0" data-purecounter-end="5" data-purecounter-duration="1"
+              <span data-purecounter-start="0" data-purecounter-end="6" data-purecounter-duration="1"
                 class="purecounter"></span>
               <p>Presence in Cities and Towns</p>
             </div>
