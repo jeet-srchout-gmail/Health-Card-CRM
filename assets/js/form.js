@@ -33,8 +33,15 @@ document.getElementById('contactForm').addEventListener('submit', function (e) {
     // Show the loading indicator
     loadingBox.style.display = 'block';
 
+    formData.delete('access_key');
+    formData.append('access_key', '0389886a-5de6-4ef7-a814-a080dadd9208');
+
     fetch('https://api.web3forms.com/submit', {
         method: 'POST',
+        headers: {
+            'Accept': 'application/json',
+            'Access-Control-Allow-Origin': '*',
+        },
         body: formData
     })
         .then(response => response.json())
@@ -42,14 +49,6 @@ document.getElementById('contactForm').addEventListener('submit', function (e) {
             loadingBox.style.display = 'none';
 
             if (data.success) {
-                formData.delete('access_key');
-                formData.append('access_key', '0389886a-5de6-4ef7-a814-a080dadd9208');
-
-                fetch('https://api.web3forms.com/submit', {
-                    method: 'POST',
-                    body: formData
-                })
-                    .then(response => response.json())
 
                 successBox.innerText = 'Your message has been sent successfully!';
                 successBox.style.display = 'block';
