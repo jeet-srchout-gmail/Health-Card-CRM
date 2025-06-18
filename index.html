@@ -15,9 +15,8 @@
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com" rel="preconnect">
     <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
-    <link
-            href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Raleway:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
-            rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Raleway:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+          rel="stylesheet">
 
     <!-- Vendor CSS Files -->
     <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -48,40 +47,99 @@
             pointer-events: auto;
         }
     </style>
+    <style>
+        .goog-te-banner-frame.skiptranslate {
+            display: none !important;
+        }
+
+        /* Make Google Translate div sticky at top */
+        #google_translate_element {
+            position: sticky;
+            top: 0;
+            background-color: #38481f;
+            padding: 8px 15px;
+            z-index: 1200;
+            text-align: right;
+        }
+
+        /* Style the dropdown */
+        #google_translate_element select.goog-te-combo {
+            background-color: #38481f !important;
+            color: white !important;
+            border: none !important;
+            padding: 5px 10px !important;
+            font-weight: bold;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        #google_translate_element select.goog-te-combo:hover {
+            background-color: #38481f !important;
+        }
+    </style>
+    <style>
+        .comparison-table {
+            width: 100%;
+            margin: auto;
+            border-collapse: collapse;
+            background: white;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        th,
+        td {
+            padding: 15px;
+            text-align: center;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #75ab42;
+            color: white;
+            text-align: center;
+            font-size: larger;
+        }
+
+        tr:hover {
+            background-color: #f1f1f1;
+        }
+
+
+        .check-icon {
+            color: green;
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        .cross-icon {
+            color: red;
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        @media screen and (max-width: 768px) {
+            .table-responsive {
+                overflow-x: auto;
+                -webkit-overflow-scrolling: touch;
+            }
+
+            th,
+            td {
+                padding: 10px;
+                font-size: 14px;
+            }
+        }
+    </style>
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.25/jspdf.plugin.autotable.min.js"></script>
 
 </head>
 
 <body class="index-page">
-<style>
-    .goog-te-banner-frame.skiptranslate {
-        display: none !important;
-    }
-
-    /* Make Google Translate div sticky at top */
-    #google_translate_element {
-        position: sticky;
-        top: 0;
-        background-color: #38481f;
-        padding: 8px 15px;
-        z-index: 1200;
-        text-align: right;
-    }
-
-    /* Style the dropdown */
-    #google_translate_element select.goog-te-combo {
-        background-color: #38481f !important;
-        color: white !important;
-        border: none !important;
-        padding: 5px 10px !important;
-        font-weight: bold;
-        border-radius: 4px;
-        cursor: pointer;
-    }
-
-    #google_translate_element select.goog-te-combo:hover {
-        background-color: #38481f !important;
-    }
-</style>
 
 <div id="google_translate_element"></div>
 
@@ -94,7 +152,7 @@
         }, 'google_translate_element');
     }
 
-    // Clear google translate URL parameters to prevent reload jump
+    // Clear Google Translate URL parameters to prevent reload jump
     window.onload = function () {
         setTimeout(function () {
             if (window.location.search.indexOf('hl=') > -1 || window.location.hash.indexOf('googtrans') > -1) {
@@ -269,15 +327,16 @@
     </section><!-- /About Section -->
 
 
-    <!-- Video Carousel -->
+    <!-- Video Cards -->
     <div class="container my-5">
         <div class="row g-4">
             <div class="col-md-3">
                 <div class="card" style="border: none">
-                    <iframe src="https://www.youtube.com/embed/bA2-29YcmTM?autoplay=1"
+                    <iframe
+                            data-src="https://www.youtube.com/embed/bA2-29YcmTM?autoplay=1&mute=1"
                             loading="lazy"
                             height="200"
-                            class="card-img-top"
+                            class="card-img-top lazy-video"
                             allow="autoplay; encrypted-media"
                             allowfullscreen></iframe>
                     <div class="card-body">
@@ -285,7 +344,6 @@
                     </div>
                 </div>
             </div>
-
             <div class="col-md-3">
                 <div class="card" style="border: none">
                     <iframe src="https://www.youtube.com/embed/cSHEAURcR8A?mute=1"
@@ -434,6 +492,7 @@
                         Download List
                     </button>
                 </div>
+                <div id="pdf-container" style="opacity: 0; position: absolute; left: -9999px; top: 0;"></div>
             </div>
 
             <!-- Firozabad Hospitals -->
@@ -1096,7 +1155,7 @@
         </div>
     </section>
 
-    <section id="details" class="details section">
+    <section id="details0" class="details section">
 
         <!-- Section Title -->
         <div class="container section-title" data-aos="fade-up">
@@ -1105,61 +1164,6 @@
         </div><!-- End Section Title -->
 
         <div class="container">
-            <style>
-                .comparison-table {
-                    width: 100%;
-                    margin: auto;
-                    border-collapse: collapse;
-                    background: white;
-                    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-                    border-radius: 10px;
-                    overflow: hidden;
-                }
-
-                th,
-                td {
-                    padding: 15px;
-                    text-align: center;
-                    border-bottom: 1px solid #ddd;
-                }
-
-                th {
-                    background-color: #75ab42;
-                    color: white;
-                    text-align: center;
-                    font-size: larger;
-                }
-
-                tr:hover {
-                    background-color: #f1f1f1;
-                }
-
-
-                .check-icon {
-                    color: green;
-                    font-size: 20px;
-                    font-weight: bold;
-                }
-
-                .cross-icon {
-                    color: red;
-                    font-size: 20px;
-                    font-weight: bold;
-                }
-
-                @media screen and (max-width: 768px) {
-                    .table-responsive {
-                        overflow-x: auto;
-                        -webkit-overflow-scrolling: touch;
-                    }
-
-                    th,
-                    td {
-                        padding: 10px;
-                        font-size: 14px;
-                    }
-                }
-            </style>
             <!-- Feature 1 -->
             <div class="row">
                 <div class="col-12">
@@ -1323,7 +1327,7 @@
 
     </section>
     <!-- Details Section -->
-    <section id="details" class="details section">
+    <section id="details1" class="details section">
 
         <!-- Section Title -->
         <div class="container section-title" data-aos="fade-up">
@@ -2427,6 +2431,7 @@
         </div>
     </div>
 </div>
+
 <!-- plan modal  -->
 <div class="modal fade contact border-0" id="planBookingModal" tabindex="-1" aria-labelledby="planBookingModalLabel"
      aria-hidden="true">
@@ -2727,12 +2732,35 @@
         }
     }
 
-    // Activate first tab on page load
     document.addEventListener('DOMContentLoaded', () => {
+        // Activate first tab on page load
         const firstTab = document.querySelector('.location-tab');
         if (firstTab) {
             showHospitals(firstTab.getAttribute('data-city'), firstTab);
         }
+
+        // Play video when reaching
+        const iframes = document.querySelectorAll('.lazy-video');
+
+        const observer = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const iframe = entry.target;
+                    const src = iframe.getAttribute('data-src');
+                    if (src) {
+                        iframe.setAttribute('src', src);
+                        observer.unobserve(iframe);
+                    }
+                }
+            });
+        }, {
+            threshold: 0.5 // 50% visible
+        });
+
+        iframes.forEach(iframe => {
+            observer.observe(iframe);
+        });
+
     });
 
 
@@ -2747,30 +2775,36 @@
         }
 
         const hospitalList = document.querySelectorAll(`#${city} .col-lg-3`);
-
         if (hospitalList.length === 0) {
             alert('No hospitals found in this city');
             return;
         }
 
-        let csv = 'Hospital Name,Owner,Specialities\n';
+        const {jsPDF} = window.jspdf;
+        const doc = new jsPDF();
+
+        doc.setFontSize(16);
+        doc.text(`${city.toUpperCase()} Hospitals`, 14, 20);
+
+        const rows = [];
 
         hospitalList.forEach(el => {
             const name = el.querySelector('h5')?.innerText?.trim() || '';
             const owner = el.querySelector('.owner')?.innerText?.replace('Owner: ', '')?.trim() || '';
             const specialities = el.querySelector('.specialities')?.innerText?.replace('Specialties: ', '')?.trim() || '';
-            csv += `${name},${owner},${specialities}\n`;
+            rows.push([name, owner, specialities]);
         });
 
-        const blob = new Blob([csv], {type: 'text/csv'});
-        const url = URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = `${city}-hospitals.csv`;
-        a.click();
-        a.remove();
-        URL.revokeObjectURL(url);
+        doc.autoTable({
+            startY: 30,
+            head: [['Hospital Name', 'Owner', 'Specialities']],
+            body: rows,
+            theme: 'grid'
+        });
+
+        doc.save(`${city}-hospitals.pdf`);
     }
+
 
     // Unused
     // Download List Button - as txt
@@ -2823,6 +2857,8 @@
         }
 
         const hospitalList = document.querySelectorAll(`#${city} .col-lg-3`);
+
+        console.warn(hospitalList);
 
         if (hospitalList.length === 0) {
             alert('No hospitals found in this city');
@@ -2907,7 +2943,7 @@
     fbq('track', 'PageView');
 </script>
 <noscript><img height="1" width="1" style="display:none"
-               src="https://www.facebook.com/tr?id=1842749856677473&ev=PageView&noscript=1"/></noscript>
+               src="https://www.facebook.com/tr?id=1842749856677473&ev=PageView&noscript=1" alt="facebook"/></noscript>
 
 </body>
 

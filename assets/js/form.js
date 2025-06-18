@@ -176,6 +176,53 @@ document.getElementById('planBookingForm').addEventListener('submit', function (
         }
     }
 
+    // downloading function
+    function downloadAsPdf(formData) {
+        const {jsPDF} = window.jspdf;
+
+        const doc = new jsPDF();
+        const primaryData = [
+            ['Primary Mobile Number', formData.get('primary_mobile_number')],
+            ['Primary Aadhaar Number', formData.get('primary_aadhar_number')],
+            ['Selected Plan', formData.get('plan')]
+        ];
+
+        // Table for primary user
+        doc.text('Primary Member Details', 14, 15);
+        doc.autoTable({
+            startY: 20,
+            head: [['Field', 'Value']],
+            body: primaryData,
+            theme: 'grid',
+            styles: {fontSize: 10}
+        });
+
+        // Members
+        const memberRows = [];
+        let i = 1;
+        while (formData.has(`member${i}_name`)) {
+            memberRows.push([
+                formData.get(`member${i}_name`) || '',
+                formData.get(`member${i}_aadhar`) || '',
+                formData.get(`member${i}_mobile`) || ''
+            ]);
+            i++;
+        }
+
+        if (memberRows.length > 0) {
+            doc.text('Family Members', 14, doc.lastAutoTable.finalY + 10);
+            doc.autoTable({
+                startY: doc.lastAutoTable.finalY + 15,
+                head: [['Name', 'Aadhaar Number', 'Mobile Number']],
+                body: memberRows,
+                theme: 'striped',
+                styles: {fontSize: 10}
+            });
+        }
+
+        doc.save('PlanSubmissionDetails.pdf');
+    }
+
     // Submit data
     fetch('https://api.web3forms.com/submit', {
         method: 'POST',
@@ -207,6 +254,11 @@ document.getElementById('planBookingForm').addEventListener('submit', function (
                 setTimeout(() => {
                     successBox.style.display = 'none';
                 }, 5000);
+
+                // downloading the data
+                downloadAsPdf(formData);
+
+
             } else {
                 errorBox.innerText = 'Error: ' + (data.message || 'Something went wrong.');
                 errorBox.style.display = 'block';
@@ -226,7 +278,6 @@ document.getElementById('backToPlanBtn').addEventListener('click', function () {
     document.querySelector('#planmodalform').style.display = 'block';
     document.querySelector('#planqrcode').style.display = 'none';
 });
-
 
 
 // JOB FORM
