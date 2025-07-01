@@ -157,15 +157,15 @@ document.getElementById('planBookingForm').addEventListener('submit', function (
 
     // Member validation loop
     for (let i = 1; i <= memberTotal; i++) {
-        const mobile = formData.get(`member${i}_mobile`);
+        // const mobile = formData.get(`member${i}_mobile`);
         const aadhar = formData.get(`member${i}_aadhar`);
 
-        if (mobile && !phoneRegex.test(mobile)) {
-            errorBox.innerText = `Member ${i}: Invalid mobile number. Must be 10 digits.`;
-            errorBox.style.display = 'block';
-            loadingBox.style.display = 'none';
-            return;
-        }
+        // if (mobile && !phoneRegex.test(mobile)) {
+        //     errorBox.innerText = `Member ${i}: Invalid mobile number. Must be 10 digits.`;
+        //     errorBox.style.display = 'block';
+        //     loadingBox.style.display = 'none';
+        //     return;
+        // }
 
         if (aadhar && !aadhaarRegex.test(aadhar)) {
             errorBox.innerText = `Member ${i}: Invalid Aadhaar number. Must be 12 digits.`;
