@@ -135,21 +135,29 @@ document.getElementById('planBookingForm').addEventListener('submit', function (
     const members = document.querySelectorAll('#memberContainer .member-group');
     const memberTotal = members.length;
     let message = '';
-    if (plan === 'Small Family Plan') {
-        message = 'Pay Rs. 472 to book your Small Family Plan Now';
-    } else if (plan === 'Large Family Plan') {
+    if (plan === 'Silver Family Plan') {
+        message = 'Pay Rs. 472 to book your Silver Family Plan Now';
+    } else if (plan === 'Gold Family Plan') {
         message = 'Pay Rs. 708 to book your Big Family Plan Now';
+    } else if (plan === 'Platinum Family Plan') {
+        message = 'Pay Rs. 1415 to book your Big Family Plan Now';
     }
 
-    if (plan === 'Small Family Plan' && memberTotal > 3) {
-        errorBox.innerText = 'The Small plan allows up to 3 family members only.';
+    if (plan === 'Silver Family Plan' && memberTotal > 3) {
+        errorBox.innerText = 'The Silver plan allows up to 3 family members only.';
         errorBox.style.display = 'block';
         loadingBox.style.display = 'none';
         return;
     }
 
-    if (plan === 'Large Family Plan' && memberTotal > 7) {
-        errorBox.innerText = 'The Large plan allows up to 7 family members only.';
+    if (plan === 'Gold Family Plan' && memberTotal > 7) {
+        errorBox.innerText = 'The Gold plan allows up to 7 family members only.';
+        errorBox.style.display = 'block';
+        loadingBox.style.display = 'none';
+        return;
+    }
+    if (plan === 'Paltinum Family Plan' && memberTotal > 5) {
+        errorBox.innerText = 'The Gold plan allows up to 5 family members only.';
         errorBox.style.display = 'block';
         loadingBox.style.display = 'none';
         return;
