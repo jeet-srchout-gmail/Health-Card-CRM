@@ -186,7 +186,7 @@ document.getElementById('planBookingForm').addEventListener('submit', function (
         const { jsPDF } = window.jspdf;
         const doc = new jsPDF();
 
-        const logoUrl = '../Website_Template/assets/img/logo.png';
+        const logoUrl = 'https://arogyasamriddhi.com/assets/img/logo.png';
         const title = 'Arogya Samriddhi';
         const today = new Date().toLocaleDateString('en-IN');
 
