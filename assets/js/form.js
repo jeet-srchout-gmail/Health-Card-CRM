@@ -182,53 +182,77 @@ document.getElementById('planBookingForm').addEventListener('submit', function (
             return;
         }
     }
-
-    // downloading function
     function downloadAsPdf(formData) {
-        const {jsPDF} = window.jspdf;
-
+        const { jsPDF } = window.jspdf;
         const doc = new jsPDF();
-        const primaryData = [
-            ['Primary Mobile Number', formData.get('primary_mobile_number')],
-            ['Primary Aadhaar Number', formData.get('primary_aadhar_number')],
-            ['Selected Plan', formData.get('plan')]
-        ];
 
-        // Table for primary user
-        doc.text('Primary Member Details', 14, 15);
-        doc.autoTable({
-            startY: 20,
-            head: [['Field', 'Value']],
-            body: primaryData,
-            theme: 'grid',
-            styles: {fontSize: 10}
-        });
+        const logoUrl = '../Website_Template/assets/img/logo.png';
+        const title = 'Arogya Samriddhi';
+        const today = new Date().toLocaleDateString('en-IN');
 
-        // Members
-        const memberRows = [];
-        let i = 1;
-        while (formData.has(`member${i}_name`)) {
-            memberRows.push([
-                formData.get(`member${i}_name`) || '',
-                formData.get(`member${i}_aadhar`) || '',
-                formData.get(`member${i}_mobile`) || ''
-            ]);
-            i++;
-        }
+        const renderPDFContent = (startY = 15) => {
+            // Add Title and Date
+            doc.setFontSize(16);
+            doc.text(title, 14, startY);
+            doc.setFontSize(10);
+            doc.text(`Submission Date: ${today}`, 14, startY + 8);
 
-        if (memberRows.length > 0) {
-            doc.text('Family Members', 14, doc.lastAutoTable.finalY + 10);
+            // Primary Member Table
+            const primaryData = [
+                ['Primary Mobile Number', formData.get('primary_mobile_number') || ''],
+                ['Primary Aadhaar Number', formData.get('primary_aadhar_number') || ''],
+                ['Selected Plan', formData.get('plan') || '']
+            ];
+
             doc.autoTable({
-                startY: doc.lastAutoTable.finalY + 15,
-                head: [['Name', 'Aadhaar Number', 'Mobile Number']],
-                body: memberRows,
-                theme: 'striped',
-                styles: {fontSize: 10}
+                startY: startY + 12,
+                head: [['Field', 'Value']],
+                body: primaryData,
+                theme: 'grid',
+                styles: { fontSize: 10 }
             });
-        }
 
-        doc.save('PlanSubmissionDetails.pdf');
+            // Family Members Table
+            const memberRows = [];
+            let i = 1;
+            while (formData.has(`member${i}_name`)) {
+                memberRows.push([
+                    formData.get(`member${i}_name`) || '',
+                    formData.get(`member${i}_aadhar`) || '',
+                    formData.get(`member${i}_mobile`) || ''
+                ]);
+                i++;
+            }
+
+            if (memberRows.length > 0) {
+                const nextY = doc.lastAutoTable.finalY + 10;
+                doc.setFontSize(12);
+                doc.text('Family Members', 14, nextY);
+                doc.autoTable({
+                    startY: nextY + 5,
+                    head: [['Name', 'Aadhaar Number', 'Mobile Number']],
+                    body: memberRows,
+                    theme: 'striped',
+                    styles: { fontSize: 10 }
+                });
+            }
+
+            doc.save('PlanSubmissionDetails.pdf');
+        };
+
+        // Try loading image, if fails -> skip logo
+        const img = new Image();
+        img.src = logoUrl;
+        img.onload = function () {
+            doc.addImage(img, 'PNG', 150, 10, 40, 15);
+            renderPDFContent(30); // Adjusted startY after image
+        };
+        img.onerror = function () {
+            console.warn('Logo failed to load. Proceeding without image.');
+            renderPDFContent(); // Default startY
+        };
     }
+
 
     // Submit data
     fetch('https://api.web3forms.com/submit', {
