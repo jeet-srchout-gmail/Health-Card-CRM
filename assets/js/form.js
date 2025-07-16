@@ -199,6 +199,7 @@ document.getElementById('planBookingForm').addEventListener('submit', function (
 
             // Primary Member Table
             const primaryData = [
+                ['Primary Name', formData.get('primary_full_name') || ''],
                 ['Primary Mobile Number', formData.get('primary_mobile_number') || ''],
                 ['Primary Aadhaar Number', formData.get('primary_aadhar_number') || ''],
                 ['Selected Plan', formData.get('plan') || '']
