@@ -1674,7 +1674,7 @@
                             <p class="owner"><strong>Owner:</strong> Dr Vijay Yadav</p>
                             <p class="specialities"><strong>Specialties:</strong> Multi-speciality</p>
                             <p class="contact"><strong>Contact:</strong> 7455052542</p>
-                            <p class="specialities"><strong>Special Offer:</strong> N/A</p>
+                            <p class="offer"><strong>Special Offer:</strong> N/A</p>
 
                         </div>
                     </div>
@@ -1686,7 +1686,7 @@
                             <p class="owner"><strong>Owner:</strong> Dr Vijay Kumar Gautam</p>
                             <p class="specialities"><strong>Specialties:</strong> Ortho, Gynae</p>
                             <p class="contact"><strong>Contact:</strong> 8534027676</p>
-                            <p class="specialities"><strong>Special Offer:</strong> N/A</p>
+                            <p class="offer"><strong>Special Offer:</strong> N/A</p>
 
                         </div>
                     </div>
@@ -1700,11 +1700,33 @@
                             class="features-item text-center flex-column justify-content-center border p-3 rounded shadow-sm h-100">
                             <h5 style="font-weight: 700;">Ratan Dularo Hospital, Kasganj</h5>
                             <p class="owner"><strong>Owner:</strong> Dr Manoj Kumar Rajput </p>
-                            <p class="owner"><strong>Phone:</strong> 6395824082 </p>
+                            <p class="contact"><strong>Contact:</strong> 6395824082 </p>
                             <p class="specialities"><strong>Specialties:</strong> Orthopaedic</p>
-                            <p class="specialities"><strong>Special Offer:</strong> Free OPD, Free sugar check-up</p>
+                            <p class="offer"><strong>Special Offer:</strong> Free OPD</p>
                         </div>
                     </div>
+                    <div class="col-lg-3 col-md-4 mb-3" data-aos="fade-up" data-aos-delay="100">
+                        <div
+                            class="features-item text-center flex-column justify-content-center border p-3 rounded shadow-sm h-100">
+                            <h5 style="font-weight: 700;">Smt. Ram Murti Hospital</h5>
+                            <p class="owner"><strong>Owner:</strong> Dr Sandhya Singh</p>
+                            <p class="contact"><strong>Contact:</strong> 7830926170</p>
+                            <p class="specialities"><strong>Specialties:</strong> Medicine</p>
+                            <p class="offer"><strong>Special Offer:</strong> N/A </p>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-3 col-md-4 mb-3" data-aos="fade-up" data-aos-delay="100">
+                        <div
+                            class="features-item text-center flex-column justify-content-center border p-3 rounded shadow-sm h-100">
+                            <h5 style="font-weight: 700;">Gupta X-Ray Clinic</h5>
+                            <p class="owner"><strong>Owner:</strong> Dr S K Gupta</p>
+                            <p class="contact"><strong>Contact:</strong> 9837428536</p>
+                            <p class="specialities"><strong>Specialties:</strong> Medicine</p>
+                            <p class="offer"><strong>Special Offer:</strong> N/A</p>
+                        </div>
+                    </div>
+
                 </div>
 
                 <!-- Greater noida Hospitals -->
@@ -1714,8 +1736,10 @@
                             class="features-item text-center flex-column justify-content-center border p-3 rounded shadow-sm h-100">
                             <h5 style="font-weight: 700;">Surya Hospital</h5>
                             <p class="owner"><strong>Owner:</strong> Vedansh Medicare</p>
+                            <p class="contact"><strong>Contact:</strong> 9654728053 </p>
+
                             <p class="specialities"><strong>Specialties:</strong> Multispeciality</p>
-                            <p class="specialities"><strong>Special Offer:</strong> N/A</p>
+                            <p class="offer"><strong>Special Offer:</strong> N/A</p>
 
                         </div>
                     </div>
@@ -3573,7 +3597,6 @@
         });
 
 
-        // Download List Button - as csv
         function downloadList() {
             const button = document.getElementById('download-list-button');
             const city = button?.getAttribute('data-city') || '';
@@ -3583,7 +3606,10 @@
                 return;
             }
 
+            const logoUrl = 'https://arogyasamriddhi.com/assets/img/logo.png';
+            const title = 'Arogya Samriddhi';
             const hospitalList = document.querySelectorAll(`#${city} .col-lg-3`);
+
             if (hospitalList.length === 0) {
                 alert('No hospitals found in this city');
                 return;
@@ -3592,11 +3618,7 @@
             const { jsPDF } = window.jspdf;
             const doc = new jsPDF();
 
-            doc.setFontSize(16);
-            doc.text(`${city.toUpperCase()} Hospitals`, 14, 20);
-
             const rows = [];
-
             hospitalList.forEach(el => {
                 const name = el.querySelector('h5')?.innerText?.trim() || '';
                 const owner = el.querySelector('.owner')?.innerText?.replace('Owner: ', '')?.trim() || '';
@@ -3606,16 +3628,37 @@
                 rows.push([name, owner, specialities, contact, offer]);
             });
 
-            doc.autoTable({
-                startY: 30,
-                head: [['Hospital Name', 'Owner', 'Specialities','Contact','Offer']],
-                body: rows,
-                theme: 'grid'
-            });
+            // Function to render the actual content
+            function renderPDFContent(startY = 30) {
+                doc.setFontSize(16);
+                doc.text(`${title}`, 14, 15);
+                doc.setFontSize(14);
+                doc.text(`${city.toUpperCase()} Hospitals`, 14, startY);
 
-            doc.save(`${city}-hospitals.pdf`);
+                doc.autoTable({
+                    startY: startY + 10,
+                    head: [['Hospital Name', 'Owner', 'Specialities', 'Contact', 'Offer']],
+                    body: rows,
+                    theme: 'grid'
+                });
+
+                doc.save(`${city}-hospitals.pdf`);
+            }
+
+            // Load image and render
+            const img = new Image();
+            img.src = logoUrl;
+
+            img.onload = function () {
+                doc.addImage(img, 'PNG', 150, 10, 40, 30);
+                renderPDFContent(30); // Adjust Y after image
+            };
+
+            img.onerror = function () {
+                console.warn('Logo failed to load. Proceeding without image.');
+                renderPDFContent(); // Default Y without image
+            };
         }
-
 
         // Unused
         // Download List Button - as txt
@@ -3657,54 +3700,7 @@
         }
 
 
-        // Unused
-        // Download List Button - as pdf
-        // not working
-        function downloadListAsPDF() {
-            const button = document.getElementById('download-list-button');
-            const city = button?.getAttribute('data-city') || '';
 
-            if (!city) {
-                alert('Please select a city first');
-                return;
-            }
-
-            const hospitalList = document.querySelectorAll(`#${city} .col-lg-3`);
-
-            console.warn(hospitalList);
-
-            if (hospitalList.length === 0) {
-                alert('No hospitals found in this city');
-                return;
-            }
-
-            // Initialize jsPDF
-            const { jsPDF } = window;
-            const doc = new jsPDF();
-
-            doc.text(`Hospital List - ${city}`, 10, 10);
-
-            let y = 20;
-            hospitalList.forEach(el => {
-                const name = el.querySelector('h5')?.innerText?.trim() || '';
-                const owner = el.querySelector('.owner')?.innerText?.replace('Owner: ', '')?.trim() || '';
-                const specialities = el.querySelector('.specialties')?.innerText?.replace('Specialties: ', '')?.trim() || '';
-
-                doc.text(`Hospital: ${name}`, 10, y);
-                y += 10;
-                doc.text(`Owner: ${owner}`, 10, y);
-                y += 10;
-                doc.text(`Specialities: ${specialities}`, 10, y);
-                y += 15;
-
-                if (y > 270) { // If we reach bottom of page, add new page
-                    doc.addPage();
-                    y = 20;
-                }
-            });
-
-            doc.save(`${city}-hospitals.pdf`);
-        }
 
     </script>
 
