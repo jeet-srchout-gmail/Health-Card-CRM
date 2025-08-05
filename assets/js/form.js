@@ -135,21 +135,29 @@ document.getElementById('planBookingForm').addEventListener('submit', function (
     const members = document.querySelectorAll('#memberContainer .member-group');
     const memberTotal = members.length;
     let message = '';
-    if (plan === 'Small Family Plan') {
-        message = 'Pay Rs. 472 to book your Small Family Plan Now';
-    } else if (plan === 'Large Family Plan') {
+    if (plan === 'Silver Family Plan') {
+        message = 'Pay Rs. 472 to book your Silver Family Plan Now';
+    } else if (plan === 'Gold Family Plan') {
         message = 'Pay Rs. 708 to book your Big Family Plan Now';
+    } else if (plan === 'Platinum Family Plan') {
+        message = 'Pay Rs. 1415 to book your Big Family Plan Now';
     }
 
-    if (plan === 'Small Family Plan' && memberTotal > 3) {
-        errorBox.innerText = 'The Small plan allows up to 3 family members only.';
+    if (plan === 'Silver Family Plan' && memberTotal > 3) {
+        errorBox.innerText = 'The Silver plan allows up to 3 family members only.';
         errorBox.style.display = 'block';
         loadingBox.style.display = 'none';
         return;
     }
 
-    if (plan === 'Large Family Plan' && memberTotal > 7) {
-        errorBox.innerText = 'The Large plan allows up to 7 family members only.';
+    if (plan === 'Gold Family Plan' && memberTotal > 7) {
+        errorBox.innerText = 'The Gold plan allows up to 7 family members only.';
+        errorBox.style.display = 'block';
+        loadingBox.style.display = 'none';
+        return;
+    }
+    if (plan === 'Paltinum Family Plan' && memberTotal > 5) {
+        errorBox.innerText = 'The Gold plan allows up to 5 family members only.';
         errorBox.style.display = 'block';
         loadingBox.style.display = 'none';
         return;
@@ -157,15 +165,15 @@ document.getElementById('planBookingForm').addEventListener('submit', function (
 
     // Member validation loop
     for (let i = 1; i <= memberTotal; i++) {
-        const mobile = formData.get(`member${i}_mobile`);
+        // const mobile = formData.get(`member${i}_mobile`);
         const aadhar = formData.get(`member${i}_aadhar`);
 
-        if (mobile && !phoneRegex.test(mobile)) {
-            errorBox.innerText = `Member ${i}: Invalid mobile number. Must be 10 digits.`;
-            errorBox.style.display = 'block';
-            loadingBox.style.display = 'none';
-            return;
-        }
+        // if (mobile && !phoneRegex.test(mobile)) {
+        //     errorBox.innerText = `Member ${i}: Invalid mobile number. Must be 10 digits.`;
+        //     errorBox.style.display = 'block';
+        //     loadingBox.style.display = 'none';
+        //     return;
+        // }
 
         if (aadhar && !aadhaarRegex.test(aadhar)) {
             errorBox.innerText = `Member ${i}: Invalid Aadhaar number. Must be 12 digits.`;
@@ -174,53 +182,78 @@ document.getElementById('planBookingForm').addEventListener('submit', function (
             return;
         }
     }
-
-    // downloading function
     function downloadAsPdf(formData) {
-        const {jsPDF} = window.jspdf;
-
+        const { jsPDF } = window.jspdf;
         const doc = new jsPDF();
-        const primaryData = [
-            ['Primary Mobile Number', formData.get('primary_mobile_number')],
-            ['Primary Aadhaar Number', formData.get('primary_aadhar_number')],
-            ['Selected Plan', formData.get('plan')]
-        ];
 
-        // Table for primary user
-        doc.text('Primary Member Details', 14, 15);
-        doc.autoTable({
-            startY: 20,
-            head: [['Field', 'Value']],
-            body: primaryData,
-            theme: 'grid',
-            styles: {fontSize: 10}
-        });
+        const logoUrl = 'https://arogyasamriddhi.com/assets/img/logo.png';
+        const title = 'Arogya Samriddhi';
+        const today = new Date().toLocaleDateString('en-IN');
 
-        // Members
-        const memberRows = [];
-        let i = 1;
-        while (formData.has(`member${i}_name`)) {
-            memberRows.push([
-                formData.get(`member${i}_name`) || '',
-                formData.get(`member${i}_aadhar`) || '',
-                formData.get(`member${i}_mobile`) || ''
-            ]);
-            i++;
-        }
+        const renderPDFContent = (startY = 15) => {
+            // Add Title and Date
+            doc.setFontSize(16);
+            doc.text(title, 14, startY);
+            doc.setFontSize(10);
+            doc.text(`Submission Date: ${today}`, 14, startY + 8);
 
-        if (memberRows.length > 0) {
-            doc.text('Family Members', 14, doc.lastAutoTable.finalY + 10);
+            // Primary Member Table
+            const primaryData = [
+                ['Primary Name', formData.get('primary_full_name') || ''],
+                ['Primary Mobile Number', formData.get('primary_mobile_number') || ''],
+                ['Primary Aadhaar Number', formData.get('primary_aadhar_number') || ''],
+                ['Selected Plan', formData.get('plan') || '']
+            ];
+
             doc.autoTable({
-                startY: doc.lastAutoTable.finalY + 15,
-                head: [['Name', 'Aadhaar Number', 'Mobile Number']],
-                body: memberRows,
-                theme: 'striped',
-                styles: {fontSize: 10}
+                startY: startY + 12,
+                head: [['Field', 'Value']],
+                body: primaryData,
+                theme: 'grid',
+                styles: { fontSize: 10 }
             });
-        }
 
-        doc.save('PlanSubmissionDetails.pdf');
+            // Family Members Table
+            const memberRows = [];
+            let i = 1;
+            while (formData.has(`member${i}_name`)) {
+                memberRows.push([
+                    formData.get(`member${i}_name`) || '',
+                    formData.get(`member${i}_aadhar`) || '',
+                    formData.get(`member${i}_mobile`) || ''
+                ]);
+                i++;
+            }
+
+            if (memberRows.length > 0) {
+                const nextY = doc.lastAutoTable.finalY + 10;
+                doc.setFontSize(12);
+                doc.text('Family Members', 14, nextY);
+                doc.autoTable({
+                    startY: nextY + 5,
+                    head: [['Name', 'Aadhaar Number', 'Mobile Number']],
+                    body: memberRows,
+                    theme: 'striped',
+                    styles: { fontSize: 10 }
+                });
+            }
+
+            doc.save('PlanSubmissionDetails.pdf');
+        };
+
+        // Try loading image, if fails -> skip logo
+        const img = new Image();
+        img.src = logoUrl;
+        img.onload = function () {
+            doc.addImage(img, 'PNG', 150, 10, 40, 30);
+            renderPDFContent(30); // Adjusted startY after image
+        };
+        img.onerror = function () {
+            console.warn('Logo failed to load. Proceeding without image.');
+            renderPDFContent(); // Default startY
+        };
     }
+
 
     // Submit data
     fetch('https://api.web3forms.com/submit', {
