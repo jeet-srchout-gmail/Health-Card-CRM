@@ -136,18 +136,18 @@ document.getElementById('planBookingForm').addEventListener('submit', function (
     const memberTotal = members.length;
     let message = '';
     if (plan === 'Bronze Family Plan') {
-        message = 'Pay Rs. 271.4 to book your Silver Family Plan Now';
+        message = 'Pay Rs. 271.4 to book your Bronze Family Plan Now';
     } else if (plan === 'Silver Family Plan') {
-        message = 'Pay Rs. 590 to book your Silver Family Plan Now';
+        message = 'Pay Rs. 472 to book your Silver Family Plan Now';
     }
     if (plan === 'Gold Family Plan') {
-        message = 'Pay Rs. 708 to book your Big Family Plan Now';
+        message = 'Pay Rs. 708 to book your Gold Family Plan Now';
     } else if (plan === 'Platinum Family Plan') {
-        message = 'Pay Rs. 1415 to book your Big Family Plan Now';
+        message = 'Pay Rs. 1416 to book your Platinum Family Plan Now';
     }
 
     if (plan === 'Bronze Family Plan' && memberTotal > 2) {
-        errorBox.innerText = 'The Bronze plan allows up to 2 family members only.';
+        errorBox.innerText = 'The Bronze plan allows up to 1 family members only.';
         errorBox.style.display = 'block';
         loadingBox.style.display = 'none';
         return;
@@ -166,8 +166,8 @@ document.getElementById('planBookingForm').addEventListener('submit', function (
         loadingBox.style.display = 'none';
         return;
     }
-    if (plan === 'Paltinum Family Plan' && memberTotal > 5) {
-        errorBox.innerText = 'The Gold plan allows up to 5 family members only.';
+    if (plan === 'Platinum Family Plan' && memberTotal > 5) {
+        errorBox.innerText = 'The Platinum plan allows up to 5 family members only.';
         errorBox.style.display = 'block';
         loadingBox.style.display = 'none';
         return;
