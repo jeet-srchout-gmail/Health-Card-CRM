@@ -135,15 +135,25 @@ document.getElementById('planBookingForm').addEventListener('submit', function (
     const members = document.querySelectorAll('#memberContainer .member-group');
     const memberTotal = members.length;
     let message = '';
-    if (plan === 'Silver Family Plan') {
+    if (plan === 'Bronze Family Plan') {
+        message = 'Pay Rs. 271.4 to book your Bronze Family Plan Now';
+    } else if (plan === 'Silver Family Plan') {
         message = 'Pay Rs. 472 to book your Silver Family Plan Now';
-    } else if (plan === 'Gold Family Plan') {
-        message = 'Pay Rs. 708 to book your Big Family Plan Now';
+    }
+    if (plan === 'Gold Family Plan') {
+        message = 'Pay Rs. 708 to book your Gold Family Plan Now';
     } else if (plan === 'Platinum Family Plan') {
-        message = 'Pay Rs. 1415 to book your Big Family Plan Now';
+        message = 'Pay Rs. 1416 to book your Platinum Family Plan Now';
     }
 
-    if (plan === 'Silver Family Plan' && memberTotal > 3) {
+    if (plan === 'Bronze Family Plan' && memberTotal > 2) {
+        errorBox.innerText = 'The Bronze plan allows up to 1 family members only.';
+        errorBox.style.display = 'block';
+        loadingBox.style.display = 'none';
+        return;
+    }
+
+    if (plan === 'Silver Family Plan' && memberTotal > 4) {
         errorBox.innerText = 'The Silver plan allows up to 3 family members only.';
         errorBox.style.display = 'block';
         loadingBox.style.display = 'none';
@@ -156,8 +166,8 @@ document.getElementById('planBookingForm').addEventListener('submit', function (
         loadingBox.style.display = 'none';
         return;
     }
-    if (plan === 'Paltinum Family Plan' && memberTotal > 5) {
-        errorBox.innerText = 'The Gold plan allows up to 5 family members only.';
+    if (plan === 'Platinum Family Plan' && memberTotal > 5) {
+        errorBox.innerText = 'The Platinum plan allows up to 5 family members only.';
         errorBox.style.display = 'block';
         loadingBox.style.display = 'none';
         return;
@@ -182,8 +192,9 @@ document.getElementById('planBookingForm').addEventListener('submit', function (
             return;
         }
     }
+
     function downloadAsPdf(formData) {
-        const { jsPDF } = window.jspdf;
+        const {jsPDF} = window.jspdf;
         const doc = new jsPDF();
 
         const logoUrl = 'https://arogyasamriddhi.com/assets/img/logo.png';
@@ -210,7 +221,7 @@ document.getElementById('planBookingForm').addEventListener('submit', function (
                 head: [['Field', 'Value']],
                 body: primaryData,
                 theme: 'grid',
-                styles: { fontSize: 10 }
+                styles: {fontSize: 10}
             });
 
             // Family Members Table
@@ -234,7 +245,7 @@ document.getElementById('planBookingForm').addEventListener('submit', function (
                     head: [['Name', 'Aadhaar Number', 'Mobile Number']],
                     body: memberRows,
                     theme: 'striped',
-                    styles: { fontSize: 10 }
+                    styles: {fontSize: 10}
                 });
             }
 
