@@ -271,7 +271,7 @@ document.getElementById('planBookingForm').addEventListener('submit', function (
         const img = new Image();
         img.src = logoUrl;
         img.onload = function () {
-            // doc.addImage(img, 'PNG', 150, 10, 40, 30);
+            doc.addImage(img, 'PNG', 150, 10, 40, 30);
             renderPDFContent(30); // Adjusted startY after image
         };
         img.onerror = function () {
