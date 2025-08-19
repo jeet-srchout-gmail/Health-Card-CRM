@@ -205,8 +205,23 @@ document.getElementById('planBookingForm').addEventListener('submit', function (
             // Add Title and Date
             doc.setFontSize(16);
             doc.text(title, 14, startY);
+
+            // Create date + time string
+            const now = new Date();
+            const submissionDateTime = now.toLocaleString("en-IN", {
+                day: "2-digit",
+                month: "short",
+                year: "numeric",
+                hour: "2-digit",
+                minute: "2-digit",
+                second: "2-digit",
+                hour12: true
+            });
+
             doc.setFontSize(10);
-            doc.text(`Submission Date: ${today}`, 14, startY + 8);
+
+            // doc.text(`Submission Date: ${today}`, 14, startY + 8);
+            doc.text(`Submission Date & Time: ${submissionDateTime}`, 14, startY + 8);
 
             // Primary Member Table
             const primaryData = [
@@ -256,7 +271,7 @@ document.getElementById('planBookingForm').addEventListener('submit', function (
         const img = new Image();
         img.src = logoUrl;
         img.onload = function () {
-            doc.addImage(img, 'PNG', 150, 10, 40, 30);
+            // doc.addImage(img, 'PNG', 150, 10, 40, 30);
             renderPDFContent(30); // Adjusted startY after image
         };
         img.onerror = function () {
