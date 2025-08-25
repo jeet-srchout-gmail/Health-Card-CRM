@@ -194,7 +194,7 @@ document.getElementById('planBookingForm').addEventListener('submit', function (
     }
 
     function downloadAsPdf(formData) {
-        const {jsPDF} = window.jspdf;
+        const { jsPDF } = window.jspdf;
         const doc = new jsPDF();
 
         const logoUrl = 'https://arogyasamriddhi.com/assets/img/logo.png';
@@ -205,23 +205,8 @@ document.getElementById('planBookingForm').addEventListener('submit', function (
             // Add Title and Date
             doc.setFontSize(16);
             doc.text(title, 14, startY);
-
-            // Create date + time string
-            const now = new Date();
-            const submissionDateTime = now.toLocaleString("en-IN", {
-                day: "2-digit",
-                month: "short",
-                year: "numeric",
-                hour: "2-digit",
-                minute: "2-digit",
-                second: "2-digit",
-                hour12: true
-            });
-
             doc.setFontSize(10);
-
-            // doc.text(`Submission Date: ${today}`, 14, startY + 8);
-            doc.text(`Submission Date & Time: ${submissionDateTime}`, 14, startY + 8);
+            doc.text(`Submission Date: ${today}`, 14, startY + 8);
 
             // Primary Member Table
             const primaryData = [
@@ -236,7 +221,7 @@ document.getElementById('planBookingForm').addEventListener('submit', function (
                 head: [['Field', 'Value']],
                 body: primaryData,
                 theme: 'grid',
-                styles: {fontSize: 10}
+                styles: { fontSize: 10 }
             });
 
             // Family Members Table
@@ -260,7 +245,7 @@ document.getElementById('planBookingForm').addEventListener('submit', function (
                     head: [['Name', 'Aadhaar Number', 'Mobile Number']],
                     body: memberRows,
                     theme: 'striped',
-                    styles: {fontSize: 10}
+                    styles: { fontSize: 10 }
                 });
             }
 
@@ -377,6 +362,10 @@ document.getElementById('jobBookingForm').addEventListener('submit', function (e
 
                 fetch('https://api.web3forms.com/submit', {
                     method: 'POST',
+                    headers: {
+                        'Accept': 'application/json',
+                        'Access-Control-Allow-Origin': '*',
+                    },
                     body: formData
                 })
                     .then(response => response.json())
