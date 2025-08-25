@@ -52,61 +52,60 @@
 </head>
 
 <body class="index-page">
-  <style>
-   .goog-te-banner-frame.skiptranslate {
-    display: none !important;
-  }
-
-  /* Make Google Translate div sticky at top */
-  #google_translate_element {
-    position: sticky;
-    top: 0;
-    background-color: #38481f;
-    padding: 8px 15px;
-    z-index: 1200;
-    text-align: right;
-  }
-
-  /* Style the dropdown */
-  #google_translate_element select.goog-te-combo {
-    background-color: #38481f !important;
-    color: white !important;
-    border: none !important;
-    padding: 5px 10px !important;
-    font-weight: bold;
-    border-radius: 4px;
-    cursor: pointer;
-  }
-
-  #google_translate_element select.goog-te-combo:hover {
-    background-color: #38481f !important;
-  }
-
-  </style>
-
-  <div id="google_translate_element"></div>
-
-  <script type="text/javascript">
-    function googleTranslateElementInit() {
-      new google.translate.TranslateElement({
-        pageLanguage: 'en',
-        includedLanguages: 'hi,en',
-        layout: google.translate.TranslateElement.InlineLayout.SIMPLE
-      }, 'google_translate_element');
-    }
-
-    // Clear google translate URL parameters to prevent reload jump
-    window.onload = function () {
-      setTimeout(function () {
-        if (window.location.search.indexOf('hl=') > -1 || window.location.hash.indexOf('googtrans') > -1) {
-          window.history.replaceState({}, document.title, window.location.pathname);
+    <style>
+        .goog-te-banner-frame.skiptranslate {
+            display: none !important;
         }
-      }, 1000);
-    }
-  </script>
 
-  <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit">
-  </script>
+        /* Make Google Translate div sticky at top */
+        #google_translate_element {
+            position: sticky;
+            top: 0;
+            background-color: #38481f;
+            padding: 8px 15px;
+            z-index: 1200;
+            text-align: right;
+        }
+
+        /* Style the dropdown */
+        #google_translate_element select.goog-te-combo {
+            background-color: #38481f !important;
+            color: white !important;
+            border: none !important;
+            padding: 5px 10px !important;
+            font-weight: bold;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        #google_translate_element select.goog-te-combo:hover {
+            background-color: #38481f !important;
+        }
+    </style>
+
+    <div id="google_translate_element"></div>
+
+    <script type="text/javascript">
+        function googleTranslateElementInit() {
+            new google.translate.TranslateElement({
+                pageLanguage: 'en',
+                includedLanguages: 'hi,en',
+                layout: google.translate.TranslateElement.InlineLayout.SIMPLE
+            }, 'google_translate_element');
+        }
+
+        // Clear google translate URL parameters to prevent reload jump
+        window.onload = function () {
+            setTimeout(function () {
+                if (window.location.search.indexOf('hl=') > -1 || window.location.hash.indexOf('googtrans') > -1) {
+                    window.history.replaceState({}, document.title, window.location.pathname);
+                }
+            }, 1000);
+        }
+    </script>
+
+    <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit">
+    </script>
     <header id="header" class="header d-flex align-items-center fixed-top mt-4"
         style="background-color: #38481F;padding: 0;">
         <div class="container-fluid container-xl position-relative d-flex align-items-center justify-content-between">
@@ -603,6 +602,20 @@
             301, Tower 1, Assotech Business Cresterra, Sector 135,<br>
             Noida, Uttar Pradesh, 201304.
         </p>
+
+        <!-- 🔹 Highlighted Account Deletion Section -->
+        <div
+            style="border: 2px solid #dc3545; background-color: #f8d7da; padding: 15px; border-radius: 8px; margin-top: 20px;">
+            <h5 style="color: #dc3545; margin-bottom: 10px;">Delete Your Account</h5>
+            <p>
+                If you wish to delete your account and personal data, please contact us at:
+                <strong>
+                    <a href="mailto:support@arogyasamriddhi.com" style="color: #b02a37;">
+                        support@arogyasamriddhi.com
+                    </a>
+                </strong>
+            </p>
+        </div>
 
 
 
