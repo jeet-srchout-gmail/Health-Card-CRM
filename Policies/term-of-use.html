@@ -43,7 +43,8 @@
         .location-tab.active {
             background: #75ab42;
         }
-        li{
+
+        li {
             list-style: none;
         }
     </style>
@@ -51,61 +52,62 @@
 </head>
 
 <body class="index-page">
-  <style>
-   .goog-te-banner-frame.skiptranslate {
-    display: none !important;
-  }
-
-  /* Make Google Translate div sticky at top */
-  #google_translate_element {
-    position: sticky;
-    top: 0;
-    background-color: #38481f;
-    padding: 8px 15px;
-    z-index: 1200;
-    text-align: right;
-  }
-
-  /* Style the dropdown */
-  #google_translate_element select.goog-te-combo {
-    background-color: #38481f !important;
-    color: white !important;
-    border: none !important;
-    padding: 5px 10px !important;
-    font-weight: bold;
-    border-radius: 4px;
-    cursor: pointer;
-  }
-
-  #google_translate_element select.goog-te-combo:hover {
-    background-color: #38481f !important;
-  }
-z
-  </style>
-
-  <div id="google_translate_element"></div>
-
-  <script type="text/javascript">
-    function googleTranslateElementInit() {
-      new google.translate.TranslateElement({
-        pageLanguage: 'en',
-        includedLanguages: 'hi,en',
-        layout: google.translate.TranslateElement.InlineLayout.SIMPLE
-      }, 'google_translate_element');
-    }
-
-    // Clear google translate URL parameters to prevent reload jump
-    window.onload = function () {
-      setTimeout(function () {
-        if (window.location.search.indexOf('hl=') > -1 || window.location.hash.indexOf('googtrans') > -1) {
-          window.history.replaceState({}, document.title, window.location.pathname);
+    <style>
+        .goog-te-banner-frame.skiptranslate {
+            display: none !important;
         }
-      }, 1000);
-    }
-  </script>
 
-  <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit">
-  </script>
+        /* Make Google Translate div sticky at top */
+        #google_translate_element {
+            position: sticky;
+            top: 0;
+            background-color: #38481f;
+            padding: 8px 15px;
+            z-index: 1200;
+            text-align: right;
+        }
+
+        /* Style the dropdown */
+        #google_translate_element select.goog-te-combo {
+            background-color: #38481f !important;
+            color: white !important;
+            border: none !important;
+            padding: 5px 10px !important;
+            font-weight: bold;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        #google_translate_element select.goog-te-combo:hover {
+            background-color: #38481f !important;
+        }
+
+        z
+    </style>
+
+    <div id="google_translate_element"></div>
+
+    <script type="text/javascript">
+        function googleTranslateElementInit() {
+            new google.translate.TranslateElement({
+                pageLanguage: 'en',
+                includedLanguages: 'hi,en',
+                layout: google.translate.TranslateElement.InlineLayout.SIMPLE
+            }, 'google_translate_element');
+        }
+
+        // Clear google translate URL parameters to prevent reload jump
+        window.onload = function () {
+            setTimeout(function () {
+                if (window.location.search.indexOf('hl=') > -1 || window.location.hash.indexOf('googtrans') > -1) {
+                    window.history.replaceState({}, document.title, window.location.pathname);
+                }
+            }, 1000);
+        }
+    </script>
+
+    <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit">
+    </script>
     <header id="header" class="header d-flex align-items-center fixed-top mt-4"
         style="background-color: #38481F;padding: 0;">
         <div class="container-fluid container-xl position-relative d-flex align-items-center justify-content-between">
@@ -119,7 +121,7 @@ z
             <nav id="navmenu" class="navmenu">
                 <ul>
                     <li><a href="../index.html" class="active">Home</a></li>
-                
+
                     <a href="../index.html" class="read-more" style="background: #75ab42;
           padding: 10px 20px;
           border-radius: 100px;"><span>Register for membership</span></a>
@@ -1062,28 +1064,20 @@ z
 
         gtag('config', 'G-N7LT4TC6PV');
     </script>
+
     <script>
-        const urlParams = new URLSearchParams(window.location.search);
-        const mobileView = urlParams.get('mobileview');
+        document.addEventListener("DOMContentLoaded", function () {
+            const urlParams = new URLSearchParams(window.location.search);
+            if (urlParams.get("appView") === "true") {
+                // Hide header and footer with !important
+                const header = document.querySelector("header");
+                const footer = document.querySelector("footer");
 
-        if (mobileView == 'true') {
-            const headers = document.getElementsByClassName('headerdiv');
-            const mains = document.getElementsByClassName('maindiv');
-            const footers = document.getElementsByClassName('footerdiv');
-            for (const header of headers) {
-                header.style.setProperty('display', 'none', 'important');
+                if (header) header.style.setProperty("display", "none", "important");
+                if (footer) footer.style.setProperty("display", "none", "important");
             }
-            for (const main of mains) {
-                main.style.setProperty('margin-top', '0rem', 'important');
-            }
-            for (const footer of footers) {
-                footer.style.setProperty('display', 'none', 'important');
-            }
-        }
-
-
+        });
     </script>
-
 </body>
 
 </html>

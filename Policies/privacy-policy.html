@@ -131,6 +131,7 @@
         </div>
     </header>
 
+   
 
 
 
@@ -604,7 +605,7 @@
         </p>
 
         <!-- 🔹 Highlighted Account Deletion Section -->
-        <div
+        <div id="deletePolicy"
             style="border: 2px solid #dc3545; background-color: #f8d7da; padding: 15px; border-radius: 8px; margin-top: 20px;">
             <h5 style="color: #dc3545; margin-bottom: 10px;">Delete Your Account</h5>
             <p>
@@ -703,7 +704,7 @@
 
     <!-- Main JS File -->
     <script src="../assets/js/main.js"></script>
-    <script src="../assets/js/form.js"></script>
+    <!-- <script src="../assets/js/form.js"></script> -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-N7LT4TC6PV"></script>
     <script>
         window.dataLayer = window.dataLayer || [];
@@ -712,27 +713,20 @@
 
         gtag('config', 'G-N7LT4TC6PV');
     </script>
-    <script>
+   
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
         const urlParams = new URLSearchParams(window.location.search);
-        const mobileView = urlParams.get('mobileview');
+        if (urlParams.get("appView") === "true") {
+            // Hide header and footer with !important
+            const header = document.querySelector("header");
+            const footer = document.querySelector("footer");
 
-        if (mobileView == 'true') {
-            const headers = document.getElementsByClassName('headerdiv');
-            const mains = document.getElementsByClassName('maindiv');
-            const footers = document.getElementsByClassName('footerdiv');
-            for (const header of headers) {
-                header.style.setProperty('display', 'none', 'important');
-            }
-            for (const main of mains) {
-                main.style.setProperty('margin-top', '0rem', 'important');
-            }
-            for (const footer of footers) {
-                footer.style.setProperty('display', 'none', 'important');
-            }
+            if (header) header.style.setProperty("display", "none", "important");
+            if (footer) footer.style.setProperty("display", "none", "important");
         }
-
-
-    </script>
+    });
+</script>
 
 </body>
 
